@@ -382,6 +382,8 @@ const cvRegex string = `v?([0-9|x|X|\*]+)(\.[0-9|x|X|\*]+)?(\.[0-9|x|X|\*]+)?` +
 	`(-([0-9A-Za-z\-]+(\.[0-9A-Za-z\-]+)*))?` +
 	`(\+([0-9A-Za-z\-]+(\.[0-9A-Za-z\-]+)*))?`
 
+var multiRegex = regexp.MustCompile(`(\d+\.\d+\.\d+)( <)`)
+
 func isX(x string) bool {
 	switch x {
 	case "x", "*", "X":
@@ -392,6 +394,7 @@ func isX(x string) bool {
 }
 
 func rewriteRange(i string) string {
+	i = multiRegex.ReplaceAllString(i, "$1,$2")
 	m := constraintRangeRegex.FindAllStringSubmatch(i, -1)
 	if m == nil {
 		return i

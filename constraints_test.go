@@ -453,6 +453,8 @@ func TestConstraintsValidate(t *testing.T) {
 		{"~1.2.3", "1.3.2", "1.3.2 does not have same major and minor version as 1.2.3"},
 		{"~1.1", "1.2.3", "1.2.3 does not have same major and minor version as 1.1"},
 		{"~1.3", "2.4.5", "2.4.5 does not have same major and minor version as 1.3"},
+		{"^2.27.2 <2.29.0", "2.29.3", "2.29.3 is greater than or equal to 2.29.0"},
+		{"^2.27.2 <2.29.0", "2.27.0", "2.27.0 does not have same major version as 2.27.2"},
 	}
 
 	for _, tc := range tests2 {
